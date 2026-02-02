@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffe6eb;
+            text-align: center;
+            padding: 30px;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            color: #d6336c;
+            font-size: 2rem;
+        }
+
+        img {
+            width: 80%;
+            max-width: 300px;
+            margin: 20px auto;
+            display: block;
+        }
+
+        .buttons {
+            margin-top: 30px;
+        }
+
+        button {
+            font-size: 1.2rem;
+            padding: 18px 32px;
+            margin: 10px;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+        }
+
+        #yesBtn {
+            background-color: #51cf66;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        #noBtn {
+            background-color: #ff6b6b;
+            color: white;
+        }
+
+        /* Heart animation */
+        .heart {
+            position: fixed;
+            bottom: -20px;
+            font-size: 24px;
+            animation: floatUp 4s linear forwards;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1.5);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1 id="title">Will you be my Valentine?</h1>
+
+    <!-- Replace with your own image -->
+    <img src="https://cdn.shopify.com/s/files/1/0597/6260/6247/products/LeimarB-taylor-valentine-card.jpg?v=1671429959" alt="Valentine Image">
+
+    <div class="buttons">
+        <button id="yesBtn" onclick="yesClicked()">Yes</button>
+        <button id="noBtn" onclick="noClicked()">No</button>
+    </div>
+
+    <script>
+        let noClickCount = 0;
+
+        const noTexts = [
+            "Are you sure?",
+            "Really sure?",
+            "Think again",
+            "Please reconsider",
+            "This is your last chance",
+            "Insert that kid that's eating :(",
+            "You know you want to"
+        ];
+
+        function noClicked() {
+            const noBtn = document.getElementById("noBtn");
+            const yesBtn = document.getElementById("yesBtn");
+
+            noBtn.innerText = noTexts[noClickCount % noTexts.length];
+            noClickCount++;
+
+            let currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+            yesBtn.style.fontSize = (currentSize + 6) + "px";
+            yesBtn.style.padding = (18 + noClickCount * 4) + "px";
+
+            if (noClickCount > 6) {
+                noBtn.style.display = "none";
+            }
+        }
+
+        function yesClicked() {
+            document.body.innerHTML = `
+                <h1>Yay 💖</h1>
+                <p style="font-size: 1.5rem;">Best decision you made today.</p>
+            `;
+
+            for (let i = 0; i < 80; i++) {
+                createHeart();
+            }
+        }
+
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.innerText = "💖";
+
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.fontSize = (Math.random() * 20 + 20) + "px";
+            heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
+
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+    </script>
+
+</body>
+</html>
